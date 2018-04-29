@@ -1,0 +1,14 @@
+<Context reloadable="false" docBase="/artifact/ROOT.war" path="">
+  <Resource name="app/data"
+    type="javax.sql.DataSource"
+    driverClassName="org.postgresql.Driver"
+    url="jdbc:postgresql://${PG_SERVICE_NAME}:${PG_SERVICE_PORT}/${DATA_DB_NAME}"
+    username="${DATA_DB_USERNAME}"
+    password="${DATA_DB_PASSWORD}"
+    maxTotal="${DATA_DB_MAX_TOTAL}"
+    maxIdle="${DATA_DB_MAX_IDLE}"
+    maxWaitMillis="${DATA_DB_MAX_WAIT}"
+    defaultAutoCommit="false"
+  />
+  <ResourceLink name="app/data" global="app/data" type="javax.sql.DataSource" />
+</Context>

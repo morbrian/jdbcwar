@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>morbrian.sandbox</groupId>
+  <artifactId>jdbcwar</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>war</packaging>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <version.java>1.8</version.java>
+    <version.maven.compiler.plugin>3.3</version.maven.compiler.plugin>
+    <version.maven.war.plugin>2.6</version.maven.war.plugin>
+    <version.javaee>7.0</version.javaee>
+    <version.jackson>2.6.4</version.jackson>
+    <version.jboss.weld>1.1.10.Final</version.jboss.weld>
+    <version.resteasy>3.1.1.Final</version.resteasy>
+    <version.logback>1.1.3</version.logback>
+    <version.slf4j>1.7.12</version.slf4j>
+    <version.fabric8.maven.plugin>3.5.37</version.fabric8.maven.plugin>
+    <version.docker.maven.plugin>0.25.2</version.docker.maven.plugin>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>${version.javaee}</version>
+    </dependency>
+    <dependency>
+      <groupId>morscs.web</groupId>
+      <artifactId>inspect-request</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <finalName>${project.artifactId}</finalName>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${version.maven.compiler.plugin}</version>
+          <configuration>
+            <source>${version.java}</source>
+            <target>${version.java}</target>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>${version.maven.war.plugin}</version>
+          <configuration>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>io.fabric8</groupId>
+          <artifactId>docker-maven-plugin</artifactId>
+          <version>${version.docker.maven.plugin}</version>
+          <configuration>
+            <verbose>true</verbose>
+            <images>
+              <image>
+                <name>dev/jdbcwar</name>
+                <alias>jdbcwar</alias>
+                <build>
+                  <dockerFileDir>${project.basedir}/src/main/docker</dockerFileDir>
+                  <assembly>
+                    <descriptorRef>rootWar</descriptorRef>
+                  </assembly>
+                </build>
+              </image>
+            </images>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>resource</goal>
+                <goal>build</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+
+</project>
+
